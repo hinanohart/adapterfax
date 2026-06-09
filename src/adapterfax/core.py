@@ -7,6 +7,8 @@ Mandatory Gram route: per layer we form ``G = (1/p) Yᵀ Y`` (``m×m``) and call
 
 from __future__ import annotations
 
+from collections.abc import Callable
+
 import numpy as np
 
 from . import __version__, baselines, cast, census, rmt
@@ -228,9 +230,9 @@ def _concat(factors_all: dict[str, FloatArray]) -> FloatArray:
     return np.concatenate(same, axis=1).astype(np.float64)
 
 
-def _safe(fn: object) -> float:
+def _safe(fn: Callable[[], float]) -> float:
     try:
-        return float(fn())  # type: ignore[operator]
+        return float(fn())
     except Exception:
         return float("nan")
 

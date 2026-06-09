@@ -47,9 +47,7 @@ def _cmd_gate(args: argparse.Namespace) -> int:
     if args.json:
         print(json.dumps(res, indent=2))
     else:
-        gates = res["gates"]
-        assert isinstance(gates, dict)
-        for name, g in gates.items():
+        for name, g in res["gates"].items():
             mark = "PASS" if g["passed"] else "FAIL"
             print(f"  [{mark}] {name}: {g['detail']}")
         print(f"active_mode={res['active_mode']} all_pass={res['all_pass']}")

@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
 from adapterfax import cli, core, synthetic
+from adapterfax.model import Adapter
 
 
-def _adapters() -> object:
+def _adapters() -> list[Adapter]:
     ad, _ = synthetic.plant_redundant_adapters(
         400, 4, 0.5, shared_groups=((0, 1, 2),), n_adapters=6, seed=4
     )
@@ -15,7 +18,7 @@ def _adapters() -> object:
 
 
 def test_report_json_roundtrip() -> None:
-    rep = core.audit(_adapters())  # type: ignore[arg-type]
+    rep = core.audit(_adapters())
     s = rep.to_json()
     d = json.loads(s)
     assert d["schema_version"] == 1
@@ -25,19 +28,19 @@ def test_report_json_roundtrip() -> None:
 
 
 def test_report_determinism_byte_identical() -> None:
-    j1 = core.audit(_adapters()).to_json()  # type: ignore[arg-type]
-    j2 = core.audit(_adapters()).to_json()  # type: ignore[arg-type]
+    j1 = core.audit(_adapters()).to_json()
+    j2 = core.audit(_adapters()).to_json()
     assert j1 == j2
 
 
 def test_report_non_claims_present() -> None:
-    rep = core.audit(_adapters())  # type: ignore[arg-type]
+    rep = core.audit(_adapters())
     joined = " ".join(rep.non_claims)
     assert "approximate" in joined
     assert "no downstream accuracy claim" in joined
 
 
-def test_cli_gate_runs(capsys: object) -> None:
+def test_cli_gate_runs(capsys: pytest.CaptureFixture[str]) -> None:
     rc = cli.main(["gate", "--json"])
     out = capsys.readouterr().out  # type: ignore[attr-defined]
     data = json.loads(out)

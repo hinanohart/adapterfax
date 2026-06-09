@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import asdict, dataclass
+from typing import Any
 
 import numpy as np
 
@@ -224,7 +225,7 @@ def g9_end_to_end_determinism(c: GateConfig) -> GateResult:
     return GateResult("G9_end_to_end_determinism", j1 == j2, {"identical": j1 == j2})
 
 
-def run_gates(fast: bool = True) -> dict[str, object]:
+def run_gates(fast: bool = True) -> dict[str, Any]:
     c = GateConfig.for_run(fast)
     results = [
         g1_tpr(c),

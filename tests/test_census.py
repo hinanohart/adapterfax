@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from adapterfax import core, synthetic
+from adapterfax.report import Report
 
 
-def _subsets(rep: object) -> set[frozenset[str]]:
-    return {frozenset(c.members) for c in rep.dependency_census}  # type: ignore[attr-defined]
+def _subsets(rep: Report) -> set[frozenset[str]]:
+    return {frozenset(c.members) for c in rep.dependency_census}
 
 
 def test_census_recovers_two_planted_groups() -> None:

@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "adapterfax"
+version = "0.1.0a1"
+description = "Data-free, CPU, post-hoc RMT audit of stacked continual-learning LoRA/DoRA/(IA)3 adapters: an effective-capacity-used measurement instrument."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = { text = "MIT" }
+authors = [{ name = "hinanohart" }]
+keywords = [
+    "lora", "dora", "adapter", "continual-learning", "random-matrix-theory",
+    "marchenko-pastur", "effective-rank", "weight-space", "audit", "data-free",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy>=1.24",
+    "safetensors>=0.4",
+]
+
+[project.optional-dependencies]
+# Tracy-Widom Painleve refinement of the soft edge (the numpy-native MC-calibrated
+# edge is the primary, exact, finite-size type-I control; scipy only sharpens the
+# analytic cross-check).
+tw = ["scipy>=1.10"]
+# Linear-matroid cross-validation of the RMT-denoised exact reconstruction.
+# Never imported by the core; experimental extra only.
+sage = []
+dev = [
+    "pytest>=7",
+    "ruff>=0.5",
+    "mypy>=1.8",
+    "scipy>=1.10",
+]
+
+[project.scripts]
+adapterfax = "adapterfax.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/hinanohart/adapterfax"
+Repository = "https://github.com/hinanohart/adapterfax"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/adapterfax"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests", "experiments"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W", "NPY"]
+ignore = ["E741"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+files = ["src/adapterfax"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,39 @@
+{
+  "params": {
+    "p": 800,
+    "n_adapters": 50,
+    "rank": 4,
+    "m": 200,
+    "gamma": 0.25,
+    "sigma2_true": 0.5,
+    "theta_star": 0.5,
+    "mults": [
+      0.5,
+      0.9,
+      1.1,
+      1.5,
+      2.0
+    ],
+    "seed": 20260609
+  },
+  "sigma2_hat": 0.4987681151429756,
+  "mc_unit_edge": 2.2850616676326063,
+  "tw_analytic_edge_crosscheck": 1.1358829870116167,
+  "tpr_supercritical": 1.0,
+  "tpr_ci": [
+    1.0,
+    1.0
+  ],
+  "null_fpr": 0.048,
+  "null_fpr_ci_hi": 0.06306640020840869,
+  "ks_stat": 0.012010687747930793,
+  "ks_pvalue": 1.0,
+  "g3_effrank_calibration_ok": true,
+  "gates": {
+    "G1_tpr": true,
+    "G2_fpr": true,
+    "G3_ks": true
+  },
+  "verdict": "GREEN",
+  "active_mode": "full"
+}

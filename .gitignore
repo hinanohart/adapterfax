@@ -1,0 +1,38 @@
+# secrets / credentials
+.env
+*.pem
+*.key
+*token*
+*secret*
+.adapterfax.lock
+.adapterfax-progress.json
+
+# model weights / tensors must never be tracked
+*.safetensors
+*.npz
+*.npy
+*.pt
+*.pth
+*.bin
+*.onnx
+*.ckpt
+*.gguf
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# os / editor
+.DS_Store
+*.swp

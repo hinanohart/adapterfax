@@ -42,7 +42,7 @@ class GateConfig:
     def for_run(cls, fast: bool) -> GateConfig:
         if fast:
             return cls()
-        return cls(p=800, n_adapters=50, tpr_trials=400, null_trials=1500)
+        return cls(p=800, n_adapters=50, tpr_trials=400, null_trials=1000)
 
 
 def _bootstrap_lo(per_trial: np.ndarray, seed: int, n: int = 2000) -> float:

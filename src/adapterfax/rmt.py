@@ -65,7 +65,7 @@ def mp_pdf(lam: FloatArray, sigma2: float, gamma: float) -> FloatArray:
 def mp_cdf(lam: FloatArray, sigma2: float, gamma: float, grid: int = 4000) -> FloatArray:
     """Numeric MP CDF via trapezoidal integration on a fine grid."""
     lo, hi = mp_edges(sigma2, gamma)
-    xs = np.linspace(lo, hi, grid)
+    xs = np.asarray(np.linspace(lo, hi, grid), dtype=np.float64)
     pdf = mp_pdf(xs, sigma2, gamma)
     cdf = np.concatenate([[0.0], np.cumsum((pdf[1:] + pdf[:-1]) * 0.5 * np.diff(xs))])
     cdf /= cdf[-1]
@@ -96,7 +96,7 @@ def estimate_sigma2(eigs: FloatArray, gamma: float, iters: int = 6) -> float:
 def _mp_median_unit(gamma: float, grid: int = 20000) -> float:
     """Median of the MP law with sigma^2=1 and aspect ratio gamma."""
     lo, hi = mp_edges(1.0, gamma)
-    xs = np.linspace(lo, hi, grid)
+    xs = np.asarray(np.linspace(lo, hi, grid), dtype=np.float64)
     cdf = mp_cdf(xs, 1.0, gamma, grid=grid)
     return float(np.interp(0.5, cdf, xs))
 

@@ -15,7 +15,7 @@ from typing import Any
 import numpy as np
 
 from . import baselines, cast, core, rmt, synthetic
-from .model import Adapter, LoraLayer
+from .model import Adapter, FloatArray, LoraLayer
 
 _MULTS = (0.5, 0.9, 1.1, 1.5, 2.0)
 
@@ -46,13 +46,13 @@ class GateConfig:
         return cls(p=800, n_adapters=50, tpr_trials=400, null_trials=1000)
 
 
-def _bootstrap_lo(per_trial: np.ndarray, seed: int, n: int = 2000) -> float:
+def _bootstrap_lo(per_trial: FloatArray, seed: int, n: int = 2000) -> float:
     rng = np.random.default_rng(seed)
     boot = rng.choice(per_trial, size=(n, per_trial.size), replace=True).mean(axis=1)
     return float(np.percentile(boot, 2.5))
 
 
-def _eigs(y: np.ndarray) -> np.ndarray:
+def _eigs(y: FloatArray) -> FloatArray:
     return np.asarray(np.sort(np.linalg.eigvalsh((y.T @ y) / y.shape[0]))[::-1], dtype=np.float64)
 
 

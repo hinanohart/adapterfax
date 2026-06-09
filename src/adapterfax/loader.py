@@ -70,8 +70,8 @@ def load_adapter_file(path: str, *, name: str | None = None) -> Adapter:
     for base, parts in bases.items():
         if "ia3" in parts:
             vec = parts["ia3"]
-            b = (vec - 1.0).reshape(-1, 1)  # delta from identity scale
-            layers[base] = LoraLayer(name=base, B=b, rank=1, alpha=1.0, kind="ia3")
+            b_ia3 = np.asarray((vec - 1.0).reshape(-1, 1), dtype=np.float64)  # delta from scale
+            layers[base] = LoraLayer(name=base, B=b_ia3, rank=1, alpha=1.0, kind="ia3")
             continue
         if "B" not in parts:
             raise ValueError(f"{path}: layer {base!r} has no up/B factor")

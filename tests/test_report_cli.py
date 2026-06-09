@@ -42,7 +42,8 @@ def test_cli_gate_runs(capsys: object) -> None:
     out = capsys.readouterr().out  # type: ignore[attr-defined]
     data = json.loads(out)
     assert "gates" in data
-    assert rc in (0, 1)
+    assert data["all_pass"] is True
+    assert rc == 0  # gate must pass on the synthetic suite
 
 
 def test_cli_version() -> None:

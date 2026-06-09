@@ -107,11 +107,11 @@ improvements or fidelity on real adapter stacks.
 | Null type-I FPR, γ=0.25 (800×200) | 0.043 (95% CI hi 0.057) |
 | Null type-I FPR, γ=0.50 (400×200) | 0.042 (95% CI hi 0.056) |
 | Effective-rank calibration (estimated vs planted) | 2 vs 2 (err 0) |
-| σ̂² recovery (true 0.5) | 0.4988 |
+| σ̂² recovery (true 0.5) | 0.504 |
 | MP bulk goodness-of-fit (KS p) | 1.00 |
 
 **Cross-adapter redundancy the per-adapter baselines miss:** with planted shared
-directions across adapters {0,1,2} and {3,4}, the census recovers exactly those two
+directions across adapters {0,1,2} and {3,4}, the census recovers those two
 subsets, while PARA returns only a per-adapter rank (4 each) and never names a subset —
 this is the gap that justifies the census output (gate G6).
 

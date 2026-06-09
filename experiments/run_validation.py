@@ -21,6 +21,16 @@ from adapterfax import __version__, core, gates, synthetic
 def main(date_stamp: str) -> int:
     suite = gates.run_gates(fast=False)
 
+    # self-contained sigma^2 recovery + MP bulk goodness-of-fit on a fresh plant
+    from adapterfax import rmt
+
+    y_s, gt_s = synthetic.plant_spikes(800, 50, 4, 0.5, (0.5, 0.9, 1.1, 1.5, 2.0), seed=20260609)
+    eigs_s = np.asarray(
+        np.sort(np.linalg.eigvalsh((y_s.T @ y_s) / y_s.shape[0]))[::-1], dtype=float
+    )
+    sigma2_hat = rmt.estimate_sigma2(eigs_s, gt_s.gamma)
+    _, mp_ks_p = rmt.mp_goodness_of_fit(eigs_s, sigma2_hat, gt_s.gamma)
+
     # baseline differentiation example: a 3-adapter shared direction that PARA
     # (per-adapter rank) cannot name but the census does.
     ad, gt = synthetic.plant_redundant_adapters(
@@ -34,6 +44,11 @@ def main(date_stamp: str) -> int:
         "version": __version__,
         "active_mode": suite["active_mode"],
         "all_gates_pass": suite["all_pass"],
+        "instrument": {
+            "sigma2_hat": float(sigma2_hat),
+            "sigma2_true": 0.5,
+            "mp_bulk_ks_pvalue": float(mp_ks_p),
+        },
         "gates": suite["gates"],
         "baseline_differentiation": {
             "planted_redundant_subsets": planted,

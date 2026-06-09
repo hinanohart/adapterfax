@@ -2,6 +2,11 @@
   "version": "0.1.0a1",
   "active_mode": "full",
   "all_gates_pass": true,
+  "instrument": {
+    "sigma2_hat": 0.5039082877386005,
+    "sigma2_true": 0.5,
+    "mp_bulk_ks_pvalue": 0.9999999999928129
+  },
   "gates": {
     "G1_tpr": {
       "name": "G1_tpr",

@@ -33,7 +33,7 @@ class GateConfig:
     rank: int = 4
     sigma2: float = 0.5
     tpr_trials: int = 50
-    null_trials: int = 400
+    null_trials: int = 600
     census_p: int = 480
     census_n: int = 8
     seed: int = 20260609
@@ -152,7 +152,9 @@ def g6_census_nontrivial(c: GateConfig) -> GateResult:
     # tolerance robustness: stable across a sweep
     factors = {ad.name: cast.to_factor(next(iter(ad.layers.values()))) for ad in adapters}
     para = baselines.para_retained_ranks(factors)
-    para_names_subset = False  # PARA returns per-adapter ranks, never a subset
+    # live check: PARA structurally returns a per-adapter integer rank, so it can
+    # never name a *subset* of adapters; this must hold for the wedge to exist.
+    para_names_subset = not all(isinstance(v, int) for v in para.values())
     stable = 0
     sweep = (0.03, 0.0625, 0.10)
     for tol in sweep:
@@ -207,7 +209,7 @@ def g7_scale_invariance(c: GateConfig) -> GateResult:
 def g8_fpr_second_shape(c: GateConfig) -> GateResult:
     # confirmatory type-I check at a second aspect ratio (gamma=0.5); a smaller
     # shape keeps the eigendecomposition cheap.
-    shape = (300, 150) if c.null_trials <= 600 else (600, 300)
+    shape = (300, 150) if c.null_trials <= 600 else (400, 200)
     res = g2_fpr(c, gamma_override=shape)
     return GateResult("G8_fpr_second_shape", res.passed, res.detail)
 

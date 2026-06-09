@@ -21,16 +21,17 @@ for term in "WeightWatcher" "Spectrum" "erank" "PARA"; do
   fi
 done
 
-# --- required NON-CLAIM disclaimers (verbatim) -------------------------------
-for phrase in \
-  "approximate dependency census" \
-  "no calibration guarantee" \
-  "no downstream accuracy"; do
+# --- required NON-CLAIM disclaimers (verbatim, canonical = _noclaim.NON_CLAIMS) ---
+while IFS= read -r phrase; do
   if ! grep -qF "$phrase" README.md; then
     echo "MISSING NON-CLAIM: $phrase"
     fail=1
   fi
-done
+done <<'EOF'
+the census is an approximate dependency census (RMT-tolerance-dependent), not an exact one
+MP/BBP thresholds are isotropic-iid approximations with no calibration guarantee for structured rank-r LoRA delta
+effective capacity used is a weight-space quantity; no downstream accuracy claim
+EOF
 
 # --- weights must never be tracked -------------------------------------------
 if git ls-files 2>/dev/null | grep -Ei '\.(npz|npy|safetensors|pt|pth|bin|onnx|ckpt|gguf)$'; then

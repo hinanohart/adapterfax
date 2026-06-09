@@ -1,0 +1,170 @@
+{
+  "version": "0.1.0a1",
+  "active_mode": "full",
+  "all_gates_pass": true,
+  "gates": {
+    "G1_tpr": {
+      "name": "G1_tpr",
+      "passed": true,
+      "detail": {
+        "tpr": 1.0,
+        "ci_lo": 1.0,
+        "n_supercritical": 2
+      }
+    },
+    "G2_fpr": {
+      "name": "G2_fpr",
+      "passed": true,
+      "detail": {
+        "fpr": 0.043,
+        "ci_hi": 0.057419304219659906,
+        "p": 800,
+        "m": 200
+      }
+    },
+    "G3_calibration": {
+      "name": "G3_calibration",
+      "passed": true,
+      "detail": {
+        "estimated": 2,
+        "planted_supercritical": 2,
+        "err": 0
+      }
+    },
+    "G4_estimator_consistency": {
+      "name": "G4_estimator_consistency",
+      "passed": true,
+      "detail": {
+        "bulk_mean": 2,
+        "median_match": 2
+      }
+    },
+    "G5_determinism": {
+      "name": "G5_determinism",
+      "passed": true,
+      "detail": {
+        "reps": 20,
+        "identical": true
+      }
+    },
+    "G6_census_nontrivial": {
+      "name": "G6_census_nontrivial",
+      "passed": true,
+      "detail": {
+        "planted": [
+          [
+            "adapter0",
+            "adapter1",
+            "adapter2"
+          ]
+        ],
+        "found": [
+          [
+            "adapter0",
+            "adapter1",
+            "adapter2"
+          ]
+        ],
+        "tolerance_stable": "3/3",
+        "para_retained": {
+          "adapter0": 4,
+          "adapter1": 4,
+          "adapter2": 4,
+          "adapter3": 4,
+          "adapter4": 4,
+          "adapter5": 4,
+          "adapter6": 4,
+          "adapter7": 4
+        },
+        "para_emits_subset": false
+      }
+    },
+    "G7_scale_invariance": {
+      "name": "G7_scale_invariance",
+      "passed": true,
+      "detail": {
+        "base": [
+          [
+            "adapter0",
+            "adapter1",
+            "adapter2"
+          ]
+        ],
+        "scaled": [
+          [
+            "adapter0",
+            "adapter1",
+            "adapter2"
+          ]
+        ]
+      }
+    },
+    "G8_fpr_second_shape": {
+      "name": "G8_fpr_second_shape",
+      "passed": true,
+      "detail": {
+        "fpr": 0.042,
+        "ci_hi": 0.05628472327710985,
+        "p": 400,
+        "m": 200
+      }
+    },
+    "G9_end_to_end_determinism": {
+      "name": "G9_end_to_end_determinism",
+      "passed": true,
+      "detail": {
+        "identical": true
+      }
+    }
+  },
+  "baseline_differentiation": {
+    "planted_redundant_subsets": [
+      [
+        "adapter0",
+        "adapter1",
+        "adapter2"
+      ],
+      [
+        "adapter3",
+        "adapter4"
+      ]
+    ],
+    "census_recovered_subsets": [
+      [
+        "adapter0",
+        "adapter1",
+        "adapter2"
+      ],
+      [
+        "adapter3",
+        "adapter4"
+      ]
+    ],
+    "census_recall_ok": true,
+    "para_retained_ranks": {
+      "layer0:adapter0": 4,
+      "layer0:adapter1": 4,
+      "layer0:adapter2": 4,
+      "layer0:adapter3": 4,
+      "layer0:adapter4": 4,
+      "layer0:adapter5": 4,
+      "layer0:adapter6": 4,
+      "layer0:adapter7": 4
+    },
+    "para_emits_subset": false,
+    "erank": 30.900848804700665,
+    "effective_capacity_used": 2,
+    "effective_capacity_ci": [
+      2.0,
+      2.0
+    ]
+  },
+  "env": {
+    "hw": "x86_64",
+    "os": "linux",
+    "python": "3.12.3",
+    "numpy": "2.4.6",
+    "date": "2026-06-09",
+    "seed": 20260609
+  }
+}

@@ -19,7 +19,7 @@ from .report import (
     Report,
 )
 
-AGGREGATIONS = ("layerwise", "global")
+AGGREGATIONS = ("layerwise",)  # 'global' stacked-Gram is deferred past v0.1
 ESTIMATORS = ("bulk_mean", "median_match")
 
 

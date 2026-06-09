@@ -20,7 +20,7 @@ def test_report_json_roundtrip() -> None:
     d = json.loads(s)
     assert d["schema_version"] == 1
     assert d["active_mode"] == "full"
-    assert "no downstream accuracy" in " ".join(d["non_claims"]) or True
+    assert "no downstream accuracy" in " ".join(d["non_claims"])
     assert isinstance(d["effective_capacity_used"], int)
 
 

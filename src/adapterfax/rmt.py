@@ -113,7 +113,7 @@ def estimate_sigma2_median(eigs: FloatArray, gamma: float) -> float:
 
 
 @lru_cache(maxsize=256)
-def noise_edge_unit(p: int, m: int, q: float = 0.95, n_mc: int = 400, seed: int = 0) -> float:
+def noise_edge_unit(p: int, m: int, q: float = 0.95, n_mc: int = 1000, seed: int = 0) -> float:
     """Parametric-null calibration of the pivotal quantity ``λ_max / σ̂²``.
 
     For unit-variance ``Z ~ N(0,1)^{p×m}`` form ``(1/p) Zᵀ Z``, run the *same*

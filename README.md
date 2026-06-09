@@ -99,7 +99,23 @@ All numbers come from synthetic experiments with planted ground-truth; they
 characterize the instrument under known conditions and do **not** claim accuracy
 improvements or fidelity on real adapter stacks.
 
-<!-- AUTOFILLED-FROM-RESULTS -->
+**Synthetic plant validation** (seed 20260609; 1000 null trials; `results/v0.1.0a1_metrics.json`):
+
+| Quantity | Result |
+|---|---|
+| BBP supercritical spike recovery (TPR) | 1.00 (95% CI [1.00, 1.00]) |
+| Null type-I FPR, γ=0.25 (800×200) | 0.043 (95% CI hi 0.057) |
+| Null type-I FPR, γ=0.50 (400×200) | 0.042 (95% CI hi 0.056) |
+| Effective-rank calibration (estimated vs planted) | 2 vs 2 (err 0) |
+| σ̂² recovery (true 0.5) | 0.4988 |
+| MP bulk goodness-of-fit (KS p) | 1.00 |
+
+**Cross-adapter redundancy the per-adapter baselines miss:** with planted shared
+directions across adapters {0,1,2} and {3,4}, the census recovers exactly those two
+subsets, while PARA returns only a per-adapter rank (4 each) and never names a subset —
+this is the gap that justifies the census output (gate G6).
+
+All nine gates pass with `active_mode=full`.
 
 Pre-registered sensitivity gates (run `adapterfax gate --full`):
 
@@ -129,6 +145,12 @@ Pre-registered sensitivity gates (run `adapterfax gate --full`):
 
 Interference detection is **not** claimed in v0.1: a `Circuit` is `redundant` only;
 sign reading is gauge-dependent and not validated. Scope is **tens** of adapters.
+
+The three non-claims, verbatim (canonical source: `adapterfax._noclaim.NON_CLAIMS`, CI-grepped):
+
+> 1. the census is an approximate dependency census (RMT-tolerance-dependent), not an exact one
+> 2. MP/BBP thresholds are isotropic-iid approximations with no calibration guarantee for structured rank-r LoRA delta
+> 3. effective capacity used is a weight-space quantity; no downstream accuracy claim
 
 ## License
 

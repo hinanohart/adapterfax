@@ -64,7 +64,7 @@ def build_parser() -> argparse.ArgumentParser:
     a = sub.add_parser("audit", help="audit a stack of adapter .safetensors files")
     a.add_argument("files", nargs="+", help="adapter .safetensors files")
     a.add_argument("--tol", type=float, default=None, help="census energy-fraction tolerance")
-    a.add_argument("--aggregation", choices=("layerwise", "global"), default="layerwise")
+    a.add_argument("--aggregation", choices=("layerwise",), default="layerwise")
     a.add_argument("--estimator", choices=("bulk_mean", "median_match"), default="bulk_mean")
     a.add_argument(
         "--tw-refine",

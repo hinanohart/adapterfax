@@ -17,15 +17,15 @@ adapterfax reads only the adapter weight files (no training data, no forward pas
 
 ```mermaid
 flowchart TD
-    A[safetensors files] --> B[loader\nload_adapters]
-    B --> C[cast\nnoise normalization]
-    C --> D[Per-layer factor stack\nY in R p x Nr]
-    D --> E[Gram matrix\nG = 1_p YT Y]
-    E --> F[rmt\neigh + MP bulk edge]
-    F --> G[Signal directions\nsuper-edge eigenvalues]
-    F --> H[sigma2 estimate\nMP bulk mean]
-    G --> I[census\ncross-adapter redundancy]
-    G --> J[report\neffective_capacity_used + CI]
+    A[safetensors files] --> B[loader<br>load_adapters]
+    B --> C[cast<br>noise normalization]
+    C --> D[Per-layer factor stack<br>Y in R p x Nr]
+    D --> E[Gram matrix<br>G = 1_p YT Y]
+    E --> F[rmt<br>eigh + MP bulk edge]
+    F --> G[Signal directions<br>super-edge eigenvalues]
+    F --> H[sigma2 estimate<br>MP bulk mean]
+    G --> I[census<br>cross-adapter redundancy]
+    G --> J[report<br>effective_capacity_used + CI]
     I --> J
     H --> J
     J --> K[Report JSON or stdout]

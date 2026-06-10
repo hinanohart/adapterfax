@@ -126,7 +126,7 @@ All numbers come from synthetic experiments with planted ground-truth; they char
 | σ̂² recovery (true 0.5) | 0.504 |
 | MP bulk goodness-of-fit (KS p) | 1.00 |
 
-**Cross-adapter redundancy the per-adapter baselines miss:** with planted shared directions across adapters {0,1,2} and {3,4}, the census recovers those two subsets, while PARA returns only a per-adapter rank (4 each) and never names a subset — this is the gap that justifies the census output (gate G6).
+**Cross-adapter redundancy the per-adapter baselines miss:** with planted shared directions across adapters {0,1,2} and {3,4}, the census recovers those two subsets, while PARA returns only a per-adapter rank (4 each) and never names a subset — this is the gap that justifies the census output (gate G9).
 
 All nine gates pass with `active_mode=full`.
 

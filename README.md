@@ -1,35 +1,17 @@
 # adapterfax
 
-[![CI](https://github.com/hinanohart/adapterfax/actions/workflows/ci.yml/badge.svg)](https://github.com/hinanohart/adapterfax/actions/workflows/ci.yml)
-![python](https://img.shields.io/badge/python-3.10--3.13-blue)
-![license](https://img.shields.io/badge/license-MIT-green)
-![status](https://img.shields.io/badge/status-alpha-orange)
+[![CI](https://github.com/hinanohart/adapterfax/actions/workflows/ci.yml/badge.svg)](https://github.com/hinanohart/adapterfax/actions/workflows/ci.yml) ![python](https://img.shields.io/badge/python-3.10--3.13-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![status](https://img.shields.io/badge/status-alpha-orange)
 
 **Data-free, CPU, post-hoc audit of a stack of continual-learning LoRA / DoRA / (IA)³ adapters.**
 
-adapterfax reads only the adapter weight files (no training data, no forward pass, no labels) and reports two things: how many independent signal directions the accumulated adapter stack actually spans above a Marchenko–Pastur noise floor (the "effective capacity used"), and which subsets of adapters share those directions and are therefore candidates for redundancy. It is a **measurement instrument, not an optimizer** — it makes no downstream accuracy claim.
+adapterfax reads only the adapter weight files (no training data, no forward pass, no labels) and reports two things:
+
+- how many independent signal directions the accumulated adapter stack actually spans above a Marchenko–Pastur noise floor (the "effective capacity used"), and
+- which subsets of adapters share those directions and are therefore candidates for redundancy.
+
+It is a **measurement instrument, not an optimizer** — it makes no downstream accuracy claim.
 
 > Status: **v0.1.0a1 (alpha).** All headline numbers are from synthetic experiments with planted ground-truth. See [Validation](#validation).
-
----
-
-## Architecture overview
-
-```mermaid
-flowchart TD
-    A[safetensors files] --> B[loader<br>load_adapters]
-    B --> C[cast<br>noise normalization]
-    C --> D[Per-layer factor stack<br>Y in R p x Nr]
-    D --> E[Gram matrix<br>G = 1_p YT Y]
-    E --> F[rmt<br>eigh + MP bulk edge]
-    F --> G[Signal directions<br>super-edge eigenvalues]
-    F --> H[sigma2 estimate<br>MP bulk mean]
-    G --> I[census<br>cross-adapter redundancy]
-    G --> J[report<br>effective_capacity_used + CI]
-    I --> J
-    H --> J
-    J --> K[Report JSON or stdout]
-```
 
 ---
 
@@ -93,6 +75,24 @@ The two donor ideas and where the novelty lies:
 | **Combinatorial dependency** | language for "which subset is redundant" | a **cross-adapter inclusion census** that per-adapter rank pruning cannot express |
 
 The surviving novelty is the intersection: adapter-SET stack spectrum × MP/BBP noise floor × SET-level redundancy × data-free post-hoc. Each property alone is prior art.
+
+## Architecture overview
+
+```mermaid
+flowchart TD
+    A[safetensors files] --> B[loader<br>load_adapters]
+    B --> C[cast<br>noise normalization]
+    C --> D[Per-layer factor stack<br>Y in R p x Nr]
+    D --> E[Gram matrix<br>G = 1_p YT Y]
+    E --> F[rmt<br>eigh + MP bulk edge]
+    F --> G[Signal directions<br>super-edge eigenvalues]
+    F --> H[sigma2 estimate<br>MP bulk mean]
+    G --> I[census<br>cross-adapter redundancy]
+    G --> J[report<br>effective_capacity_used + CI]
+    I --> J
+    H --> J
+    J --> K[Report JSON or stdout]
+```
 
 ---
 

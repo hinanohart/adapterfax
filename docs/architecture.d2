@@ -1,0 +1,51 @@
+direction: down
+explanation: |md
+  ### adapterfax
+  **Data-free, CPU, post-hoc audit of a stack of continual-learning LoRA / DoRA / (IA)³ adapters.**
+| {near: top-center}
+
+input: "① safetensors files" {shape: cylinder; style: {fill: "#6366f1"; font-color: "#ffffff"; stroke: "#4338ca"; bold: true; font-size: 18}}
+loader: "② loader\nload_adapters" {style: {fill: "#0ea5e9"; font-color: "#ffffff"; stroke: "#0369a1"; bold: true; font-size: 18}}
+cast: "③ cast\nnoise normalization" {style: {fill: "#0ea5e9"; font-color: "#ffffff"; stroke: "#0369a1"; bold: true; font-size: 16}}
+stack: "Per-layer factor stack\nY in R p x Nr" {style: {fill: "#dcfce7"; font-color: "#065f46"; stroke: "#10b981"; bold: true; font-size: 15}}
+gram: "Gram matrix\nG = 1/p YT Y" {style: {fill: "#dcfce7"; font-color: "#065f46"; stroke: "#10b981"; bold: true; font-size: 15}}
+
+spectral: "Spectral Analysis" {
+  style: {fill: "#fffbeb"; stroke: "#f59e0b"; font-color: "#92400e"; bold: true; font-size: 16}
+  rmt: "④ rmt\neigh + MP bulk edge"
+  sig: "Signal directions\nsuper-edge eigenvalues"
+  sigma2: "sigma2 estimate\nMP bulk mean"
+  rmt.style: {fill: "#fef3c7"; font-color: "#92400e"}
+  sig.style: {fill: "#fef3c7"; font-color: "#92400e"}
+  sigma2.style: {fill: "#fef3c7"; font-color: "#92400e"}
+}
+
+output_zone: "Output" {
+  style: {fill: "#f0fdf4"; stroke: "#10b981"; font-color: "#065f46"; bold: true; font-size: 16}
+  census: "census\ncross-adapter redundancy"
+  report: "⑤ report\neffective_capacity_used + CI"
+  census.style: {fill: "#dcfce7"; font-color: "#065f46"}
+  report.style: {fill: "#dcfce7"; font-color: "#065f46"}
+}
+
+result: "⑥ Report JSON or stdout" {shape: cylinder; style: {fill: "#fdf2f8"; stroke: "#ec4899"; font-color: "#9d174e"; bold: true; font-size: 16}}
+
+input -> loader: "① load"
+loader -> cast: "② cast"
+cast -> stack: "③ stack"
+stack -> gram: "③ gram"
+gram -> spectral.rmt: "④ decompose"
+spectral.rmt -> spectral.sig
+spectral.rmt -> spectral.sigma2
+spectral.sig -> output_zone.census: "⑤ census"
+spectral.sig -> output_zone.report: "⑤ report"
+spectral.sigma2 -> output_zone.report
+output_zone.census -> output_zone.report
+output_zone.report -> result: "⑥ write"
+
+legend: "Legend" {
+  near: bottom-center
+  style: {fill: "#f8fafc"; stroke: "#cbd5e1"; font-size: 13}
+  e: "● entry"; c: "● core"; p: "● processing"; b: "● spectral"; d: "● output"
+  e.style.font-color: "#4338ca"; c.style.font-color: "#0369a1"; p.style.font-color: "#10b981"; b.style.font-color: "#f59e0b"; d.style.font-color: "#ec4899"
+}

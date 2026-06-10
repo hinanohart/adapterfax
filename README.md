@@ -78,21 +78,9 @@ The surviving novelty is the intersection: adapter-SET stack spectrum × MP/BBP 
 
 ## Architecture overview
 
-```mermaid
-flowchart TD
-    A[safetensors files] --> B[loader<br>load_adapters]
-    B --> C[cast<br>noise normalization]
-    C --> D[Per-layer factor stack<br>Y in R p x Nr]
-    D --> E[Gram matrix<br>G = 1_p YT Y]
-    E --> F[rmt<br>eigh + MP bulk edge]
-    F --> G[Signal directions<br>super-edge eigenvalues]
-    F --> H[sigma2 estimate<br>MP bulk mean]
-    G --> I[census<br>cross-adapter redundancy]
-    G --> J[report<br>effective_capacity_used + CI]
-    I --> J
-    H --> J
-    J --> K[Report JSON or stdout]
-```
+<div align="center">
+  <img src="docs/architecture.png" alt="adapterfax architecture" width="840">
+</div>
 
 ---
 
@@ -165,3 +153,4 @@ The three non-claims, verbatim (canonical source: `adapterfax._noclaim.NON_CLAIM
 ## License
 
 MIT.
+
